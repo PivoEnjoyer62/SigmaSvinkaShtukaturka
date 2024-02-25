@@ -42,6 +42,9 @@ def answer_func(quizz_id):
     sql = SQLManager("quizz.db")
     form = request.form.get("answer")
     print(form)
+    if form == "1":
+        session["score"] += 1
+    session["current_question"] += 1
 
 
     return "Answered"
