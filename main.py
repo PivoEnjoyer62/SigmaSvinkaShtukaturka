@@ -41,14 +41,18 @@ def show_question(quizz_id):
 def answer_func(quizz_id):
     sql = SQLManager("quizz.db")
     form = request.form.get("answer")
-    print(form)
     if form == "1":
         session["score"] += 1
     session["current_question"] += 1
 
+    if len(session["questions"]) <= session["current_question"]:
+        return redirect(url_for("result_func", quizz_id=quizz_id))
+    return redirect(url_for("show_question", quizz_id=quizz_id))
 
-    return "Answered"
 
+@app.route("/question/<int:quizz_id>/result")
+def result_func(quizz_id):
+    return render_template("result.html")
 
 if __name__ == "__main__":
     app.run()
