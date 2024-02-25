@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, redirect, url_for
+from flask import Flask, render_template, session, redirect, url_for, request
 from sqlmanager import SQLManager
 
 
@@ -24,6 +24,7 @@ def get_questions(quizz_id):
     questions = sql.select_questions(quizz_id)
     session["questions"] = questions
     session["current_question"] = 0
+    session["score"] = 0
     return redirect(url_for("show_question", quizz_id=quizz_id))
 
 
@@ -31,7 +32,7 @@ def get_questions(quizz_id):
 def show_question(quizz_id):
     sql = SQLManager("quizz.db")
     current = session["current_question"]
-    question= session["questions"][current]
+    question = session["questions"][current]
     answers = sql.select_answers(question[0])
     return render_template("question.html", question= question, answers=answers, quizz_id=quizz_id)
 
@@ -39,6 +40,9 @@ def show_question(quizz_id):
 @app.route("/question/<int:quizz_id>/answer", methods=["POST"])
 def answer_func(quizz_id):
     sql = SQLManager("quizz.db")
+    form = request.form.get("answer")
+    print(form)
+
 
     return "Answered"
 
