@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Запитання</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<h1>Запитання</h1>
+
+        <p>{{ question[2] }}</p>
+        <form action="{{ url_for('answer_func', quizz_id=quizz_id) }}" method="post">
+            {% for option in answers %}
+                <div>
+                    <input type="radio" id="option{{ loop.index }}" name="answer" value="{{ option[2] }}">
+                    <label for="option{{ loop.index }}">{{ option[2] }}</label>
+                </div>
+            {% endfor %}
+            <input type="hidden" name="question_id" value="{{ question[0] }}">
+            <button type="submit">Submit Answer</button>
+        </form>
+    </div>
+</body>
+</html>

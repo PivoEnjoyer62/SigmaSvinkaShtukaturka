@@ -1,5 +1,6 @@
 import sqlite3
 
+
 class SQLManager:
     def __init__(self, db_name):
         self.db = sqlite3.connect(db_name)
@@ -33,39 +34,60 @@ class SQLManager:
         cursor.close()
         self.db.commit()
 
+
     def add_quizz(self, name, description):
         cursor = self.db.cursor()
         cursor.execute("""
-            INSERT INTO Quizz (quizz_name, description) VALUES (?, ?)
+            INSERT INTO Quizz (quizz_name,description) VALUES (?, ?)
         """, [name, description])
         cursor.close()
         self.db.commit()
 
+
     def add_question(self, quiz_id, content):
         cursor = self.db.cursor()
         cursor.execute("""
-            INSERT INTO Questions (quiz_id, content) VALUES (?, ?)
+            INSERT INTO Questions (quiz_id,content) VALUES (?, ?)
         """, [quiz_id, content])
         cursor.close()
         self.db.commit()
 
-    def add_answers(self, question_id, content, is_right):
+    def add_answer(self, question_id, content, is_right):
         cursor = self.db.cursor()
         cursor.execute("""
-            INSERT INTO Answers (question_id, content, is_right) VALUES (?, ?, ?)
-        """, [question_id, content, is_right])
+            INSERT INTO Answers (question_id,content,is_right) VALUES (?, ?, ?)
+        """, [question_id, content,is_right])
         cursor.close()
         self.db.commit()
 
     def select_quizzes(self):
         cursor = self.db.cursor()
         cursor.execute("""
-            SELECT * FROM Quizz;
-        """)
-
+                    SELECT * FROM Quizz;
+                """)
         records = cursor.fetchall()
-
         cursor.close()
         self.db.commit()
         return records
 
+
+
+    def select_questions(self, quizz_id):
+        cursor = self.db.cursor()
+        cursor.execute("""
+                            SELECT * FROM Questions WHERE quiz_id = ?;
+                        """, [quizz_id])
+        records = cursor.fetchall()
+        cursor.close()
+        self.db.commit()
+        return records
+
+    def select_answers(self, question_id):
+        cursor = self.db.cursor()
+        cursor.execute("""
+                            SELECT * FROM Answers WHERE question_id = ?;
+                        """, [question_id])
+        records = cursor.fetchall()
+        cursor.close()
+        self.db.commit()
+        return records

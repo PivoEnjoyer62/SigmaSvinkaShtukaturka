@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block title %}Sigma Svinota{% endblock %}
+{% block content %}
+<div class="container">
+    <header class="d-flex justify-content-center py-3">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Main</a></li>
+        <li class="nav-item"><a href="/quizzes" class="nav-link">Quizzes</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Support</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Create Quizz</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+      </ul>
+    </header>
+  </div>
+<h2 align="center">Quizz Page</h2>
+    <div style="">
+        {% for element in quizzes %}
+        <h2> {{element[1]}} </h2>
+        <p> {{element[2]}} </p>
+        <a href="{{ url_for('get_questions', quizz_id=element[0]) }}"> Перейти </a>
+     {% endfor %}
+    </div>
+
+{% endblock %}
